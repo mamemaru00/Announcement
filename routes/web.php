@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AnnouncementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+
+Route::prefix('announcement')->middleware('auth')->group(function() {
+    Route::get('/', [AnnouncementController::class, 'index'])->name('announcement.index');
+    Route::get('/list', [AnnouncementController::class, 'list'])->name('announcement.list');
+    Route::get('/{announcement}', [AnnouncementController::class, 'show'])->name('announcement.show');
+});
+
